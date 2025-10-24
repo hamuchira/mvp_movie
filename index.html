@@ -32,9 +32,12 @@
     <section class="text-center mb-8">
       <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">🏆 2026年動画MVP投票 🏆</h1>
       <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
-        <p class="text-gray-700 mb-4">
+        <p class="text-gray-700 mb-2">
           今年もたくさんの動画をご視聴いただきありがとうございました!<br />
           2025年に配信した動画の中から、あなたのお気に入りをぜひ教えてください!
+        </p>
+        <p class="text-orange-600 font-semibold text-sm mb-4">
+          ✨ 投票すると抽選くじが手に入ります！年末のわくわくお楽しみに、ぜひ挑戦してみてください！
         </p>
         <div class="grid md:grid-cols-2 gap-4">
           <div class="bg-yellow-50 rounded-xl p-4 text-left">
@@ -670,6 +673,18 @@
       }
 
       const handleName = elHandleName.value.trim();
+      
+      // ハンドルネーム未入力の場合、確認ダイアログを表示
+      if (!handleName) {
+        const proceed = confirm('ハンドルネームが未入力です。\n\n抽選に参加しない場合はこのまま投票できますが、\n抽選に参加したい場合は「キャンセル」を押して\nハンドルネームを入力してください。\n\nこのまま投票しますか？');
+        
+        if (!proceed) {
+          // キャンセルされた場合、ハンドルネーム入力欄にスクロール
+          elHandleName.focus();
+          elHandleName.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+      }
       
       const payload = {
         regularVotes: [...regularVotes].sort((a, b) => parseInt(a) - parseInt(b)).join(', '),
