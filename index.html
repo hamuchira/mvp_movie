@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🏆 2026年動画MVP投票｜もっと!はむチラ長屋ch.</title>
+  <meta name="description" content="はむチラ長屋ch. 2026年MVP投票。通常動画3票＋しゅくれの部屋3票まで。" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    .header-placeholder {
+      background: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+      position: relative;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-orange-50 to-pink-50">
+  <!-- ヘッダー画像エリア -->
+  <div class="header-placeholder w-full h-48 md:h-64 flex items-center justify-center">
+    <div class="text-center text-white px-4">
+      <div class="text-sm mb-2">📷 ヘッダー画像をここに配置</div>
+      <div class="text-xs opacity-75">推奨サイズ: 1200x400px</div>
+      <div class="text-xs opacity-75">ファイル名: header-image.jpg</div>
+      <!-- 実際の画像を使う場合は下記のようにしてください -->
+      <!-- <img src="header-image.jpg" alt="2026 MVP投票" class="w-full h-full object-cover"> -->
+    </div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-4 py-8 pb-32">
+    <!-- タイトル＆イントロ -->
+    <section class="text-center mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">🏆 2026年動画MVP投票 🏆</h1>
+      <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+        <p class="text-gray-700 mb-4">
+          今年もたくさんの動画をご視聴いただきありがとうございました!<br />
+          2025年に配信した動画の中から、あなたのお気に入りをぜひ教えてください!
+        </p>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-yellow-50 rounded-xl p-4 text-left">
+            <h3 class="font-bold text-yellow-600 mb-2">📅 投票期間</h3>
+            <p class="text-sm text-gray-700">2025年10月24日～12月31日</p>
+          </div>
+          <div class="bg-pink-50 rounded-xl p-4 text-left">
+            <h3 class="font-bold text-pink-600 mb-2">🎊 結果発表</h3>
+            <p class="text-sm text-gray-700">年末に発表予定</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 投票フォーム -->
+    <section class="bg-gradient-to-r from-orange-50 to-pink-50 rounded-2xl p-6 mb-8 shadow-lg">
+      <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">投票フォーム</h3>
+
+      <!-- しゅくれの部屋 -->
+      <div class="bg-white rounded-xl p-6 mb-4">
+        <h4 class="text-lg font-bold text-pink-600 mb-3">🎀 しゅくれの部屋(3票まで)</h4>
+        
+        <div class="text-center mb-3">
+          <button id="btnToggleShukure" type="button"
+                  class="w-full bg-pink-100 hover:bg-pink-200 rounded-lg py-4 px-6 transition flex items-center justify-center gap-3 font-semibold text-pink-700">
+            <span>しゅくれの部屋一覧を開く</span>
+            <span id="chevShukure" class="text-2xl">▼</span>
+          </button>
+        </div>
+        
+        <div class="text-sm text-gray-700 mb-3">
+          選択済み: <span id="shukureCount" class="font-bold text-pink-600">0/3票</span>
+          <div id="shukureList" class="mt-1 text-xs hidden"></div>
+        </div>
+
+        <!-- しゅくれの部屋一覧（トグル） -->
+        <div id="panelShukure" class="hidden mt-4 border-t-2 border-pink-100 pt-4">
+          <div id="shukureVideoList" class="space-y-2 max-h-96 overflow-y-auto pr-1"></div>
+          <div class="text-xs text-gray-400 mt-2">※ 一覧内をスクロールできます</div>
+        </div>
+      </div>
+
+      <!-- 通常動画 -->
+      <div class="bg-white rounded-xl p-6 mb-4">
+        <h4 class="text-lg font-bold text-orange-600 mb-3">📺 通常動画(3票まで)</h4>
+
+        <div class="text-center mb-3">
+          <button id="btnToggleRegular" type="button"
+                  class="w-full bg-orange-100 hover:bg-orange-200 rounded-lg py-4 px-6 transition flex items-center justify-center gap-3 font-semibold text-orange-700">
+            <span>通常動画一覧を開く</span>
+            <span id="chevRegular" class="text-2xl">▼</span>
+          </button>
+        </div>
+
+        <div class="text-sm text-gray-700 mb-3">
+          選択済み: <span id="regularCount" class="font-bold text-orange-600">0/3票</span>
+          <div id="regularList" class="mt-1 text-xs hidden"></div>
+        </div>
+
+        <!-- 通常動画一覧（トグル） -->
+        <div id="panelRegular" class="hidden mt-4 border-t-2 border-orange-100 pt-4">
+          <div id="regularVideoList" class="space-y-2 max-h-96 overflow-y-auto pr-1"></div>
+          <div class="text-xs text-gray-400 mt-2">※ 一覧内をスクロールできます</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="text-center py-8 border-t-2 border-orange-200">
+      <a href="https://www.youtube.com/@hamuchira" target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-2 text-lg font-bold text-gray-700 hover:text-orange-600 transition">
+        <span>🐹</span><span>もっと!はむチラ長屋ch.</span>
+      </a>
+      <p class="text-sm text-gray-500 mt-2">いつもご視聴ありがとうございます!</p>
+    </footer>
+  </main>
+
+  <!-- YouTube確認モーダル -->
+  <div id="youtubeModal" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden items-center justify-center z-50" style="display: none;">
+    <div class="bg-white rounded-2xl shadow-2xl w-11/12 max-w-md p-6">
+      <h5 class="text-lg font-bold text-gray-800 mb-2">YouTubeに移動します</h5>
+      <p class="text-sm text-gray-600 mb-4">このページを離れてYouTubeを開いてもよろしいですか？</p>
+      <div class="flex justify-end gap-2">
+        <button id="btnCancelYoutube" class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium">いいえ</button>
+        <button id="btnOkYoutube" class="px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-bold">はい</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- フローティング投票ボタンエリア（sticky） -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t-2 border-orange-200 shadow-lg z-50">
+    <div class="max-w-4xl mx-auto px-4 py-4">
+      <!-- シェア＆コピーボタン -->
+      <div class="flex gap-3 mb-3">
+        <button id="btnShare" type="button"
+                class="flex-1 bg-blue-500 text-white py-3 rounded-lg font-medium hover:bg-blue-600 transition flex items-center justify-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          <span>投票内容をシェア</span>
+        </button>
+        <button id="btnCopy" type="button"
+                class="flex-1 bg-gray-500 text-white py-3 rounded-lg font-medium hover:bg-gray-600 transition flex items-center justify-center gap-2">
+          <svg id="copyIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <svg id="checkIcon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span id="copyText">コピー</span>
+        </button>
+      </div>
+
+      <!-- 投票ボタン -->
+      <button id="btnSubmit" type="button"
+              class="w-full bg-gradient-to-r from-orange-500 to-pink-500 text-white py-4 rounded-xl font-bold text-lg hover:from-orange-600 hover:to-pink-600 transition shadow-lg">
+        投票する
+      </button>
+      <div id="debug" class="text-xs text-gray-500 mt-2 text-center"></div>
+    </div>
+  </div>
+
+  <script>
+    // --- CSV データ ---
+    const regularCsvData = `1,【迎春初回し】あけましておめでとうございます2025～ジャンガリアンハムスター,https://youtu.be/-lsuG1TtOXQ,2025-01-01
+2,【生後20日目】初お掃除のわちゃわちゃタイム～ジャンガリアンハムスター,https://youtu.be/iCmGaaAP-00,2025-01-05
+3,【生後21日目】可愛さの破壊力～ジャンガリアンハムスター,https://youtu.be/aUi47zjbhSI,2025-01-08
+4,【生後22日目】初キャベツと毛並みが悪い理由,https://youtu.be/RUFK42nqQms,2025-01-12
+5,【プレミア配信】はむはむレース予選、1/18 21:00～始まります,https://youtu.be/jKTum3Z1yRs,2025-01-14
+6,【祝！ハーフバースデー】生後半年の様子と体重測定～ジャンガリアンハムスター,https://youtu.be/-jWzFlf2bjY,2025-01-15
+7,【プレミア配信】最速のハムは誰！？はむはむレース2025予選～20匹のジャンガアンハムスター（プレゼントのお知らせも）,https://youtu.be/DPevq-UqifA,2025-01-18
+8,【ここで一句】ぺしゃけつ振り返れば○○○,https://youtu.be/qoBO1ZNwxAU,2025-01-21
+9,こどおば卒業～ジャンガリアンハムスターの仲良し母娘,https://youtu.be/MzW0cYI0Kqs,2025-01-22
+10,【最後の砦】もふもふ3兄弟は永遠に～ジャンガリアンハムスター,https://youtu.be/eKkx9IvA2vc,2025-01-26
+11,【赤ちゃん生後23～24日目】ママの独壇場ですが、何か？～ジャンガリアンハムスター,https://youtu.be/OHDxjuwPYGo,2025-01-29
+12,仲良し3色母娘、解散！別居したのは誰？～ジャンガリアンハムスター,https://youtu.be/CeWuBzPiLcE,2025-02-02
+13,仲良し兄弟姉妹の恵方巻きごっこ～ジャンガリアンハムスター,https://youtu.be/li-fDec7YBM,2025-02-05
+14,【あと3日】はむはむレース頂上決戦まで、あと3日！2/8(土)21:00～、ついに決着！,https://youtu.be/uweTI70ASP0,2025-02-05
+15,【プレミア配信】はむはむレース2025頂上決戦～最速のハムスターは誰！？～ジャンガリアンハムスター,https://youtu.be/GFe60ixNM20,2025-02-08
+16,【難航するお見合い】つかめない！おちり！～ジャンガリアンハムスター,https://youtu.be/OgArBquzM1Q,2025-02-12
+17,【祝！1歳半】2兄弟4姉妹のバースデー～ジャンガリアンハムスター,https://youtu.be/pPhn1pokBzU,2025-02-16
+18,【生後25日目①】衝撃！ビフォアアフター～毛並み、蘇る～ジャンガリアンハムスター,https://youtu.be/RGibMv5dc_4,2025-02-19
+19,お迎え！？ブラウニーがいっぱい～ジャンガリアンハムスター,https://youtu.be/MnSYTQP2E_w,2025-02-23
+20,【ハムスターのお見合い】つかんだ、おちり！～ジャンガリアンハムスター,https://youtu.be/uRkC5X39GfE,2025-02-26
+21,お見合い？バトル？掴みたい、掴めないおちり～ジャンガリアンハムスター,https://youtu.be/ByUrCRf2cDw,2025-02-28
+22,【ハムスターお見合い】最後の切り札、真打ち登場！？～ジャンガリアンハムスター,https://youtu.be/H5Q9Nw-djCc,2025-03-02
+23,はむチラチャレンジを復習しよう！～ジャンガリアンハムスター,https://youtu.be/fnTG7xWhxAc,2025-03-03
+24,【ハムスターのお見合い】おちりを掴んだその先へ～トリュフ編②～ジャンガリアンハムスター,https://youtu.be/7fmOp2BAHk8,2025-03-05
+25,【プレミア配信】気絶祭り！？お兄ちゃんが大人になった日～ジャンガリアンハムスターのお見合い,https://youtu.be/mG9LoOXJ1lY,2025-03-08
+26,【生後25日目②】毛並み復活！可愛すぎる記念撮影～ジャンガリアンハムスター,https://youtu.be/LSL85iM9WQA,2025-03-12
+27,【トリュフママの赤ちゃん】生後0～1日、何匹産まれた？～ジャンガリアンハムスター,https://youtu.be/oljPFf9dydw,2025-03-14
+28,【アマレッティのお見合い】ハムスターに相性はある？ヤバさに震える男たち～ジャンガリアンハムスター,https://youtu.be/7viowCDqrsw,2025-03-16
+29,【トリュフママの赤ちゃん】生後2～3日、地下室保育がはじまった！～ジャンガリアンハムスター,https://youtu.be/ztnc5HKUT7o,2025-03-18
+30,生きて～生を手放さない強さ～ジャンガリアンハムスター,https://youtu.be/QdRNaask404,2025-03-19
+31,【トリュフママの赤ちゃん】生後4日目、早くもへろへろ！？子育ては大変だ～毛色考察～ジャンガリアンハムスター,https://youtu.be/mcZgBCNrEk4,2025-03-23
+32,【お迎え】レアカラー祭り～ジャンガリアンハムスター,https://youtu.be/smQosbPDu3c,2025-03-26
+33,【トリュフママの赤ちゃん】生後5日目、ころころ赤ちゃん全員丸見え！～ジャンガリアンハムスター,https://youtu.be/U_dHBanGCa8,2025-03-29
+34,【トリュフママの赤ちゃん】生後6日目、集めても集めても零れ出る赤ちゃん～ジャンガリアンハムスター,https://youtu.be/J9GbxW_AsuY,2025-03-30
+35,【トリュフママの赤ちゃん】生後7日目、大叔父と毛色比較してみた！～ジャンガリアンハムスター,https://youtu.be/lUrNMwFF0U0,2025-04-02
+36,【プレミア配信】ハムスターの赤ちゃん＆レアカラー4匹の命名式（生後20日目）～ジャンガリアンハムスター,https://youtu.be/lUQB0xlabIA,2025-04-12
+37,【トリュフママの赤ちゃん】生後8日目、ママに異変！何が起きた？～ジャンガリアンハムスター,https://youtu.be/oJYD4e1JryU,2025-04-13
+38,元気がない。ひとりぼっちのお兄ちゃん～ジャンガリアンハムスター,https://youtu.be/_3Tuo_4oYpc,2025-04-20
+39,【絵本】お兄ちゃんとまた会える日まで～史上？最高の仲良し兄弟カフェモカとすふれ～,https://youtu.be/atOh2JfLRFc,2025-04-23
+40,【トリュフママの赤ちゃん】生後9日目、ぱいこ、はじめての大冒険～ジャンガリアンハムスター,https://youtu.be/JQowmWoSvQs,2025-04-27
+41,【トリュフママの赤ちゃん】生後10日目、まさかの爆速"開眼"記録！～ジャンガリアンハムスター,https://youtu.be/JV73rnH99-U,2025-04-30
+42,【小動物のおやつ】charm小石川店に行ってきました！～ジャンガリアンハムスター,https://youtu.be/Pf-jICurIk0,2025-05-04
+43,【トリュフママの赤ちゃん】生後11日目、史上最短で〇〇達成！？～ジャンガリアンハムスターの赤ちゃん,https://youtu.be/HStt54_DUNo,2025-05-07
+44,コレットママの赤ちゃん【生後26日目】赤ちゃんのわちゃわちゃタイム～ジャンガリアンハムスター,https://youtu.be/N3iMfBY5uZ8,2025-05-11
+45,【ゆるっと近況報告】はむはむ総選挙2025とハムスターとイベント（ローデンツ）新グッズと～ジャンガリアンハムスター,https://youtu.be/4sJnuctUXkI,2025-05-14
+46,【プレミア公開】はむはむ総選挙2025～推しハムはどの子？全71匹のハムスターがエントリー！推しハム応援日和,https://youtu.be/Zu9yPqCNoDk,2025-05-17
+47,実話【ジャンガリアンの絵本】つよがりハムスター「らすく」の小さくて大きな一歩【感動ストーリー】,https://youtu.be/GdS7L1EFyMo,2025-05-19
+48,推しハムスターは何位！？プレミア投票の結果発表～はむはむ総選挙2025～ジャンガリアンハムスター,https://youtu.be/1Meu1JHCpUk,2025-05-21
+49,コレットママの赤ちゃん【生後27～28日目】赤ちゃんとママ、整列～ジャンガリアンハムスター,https://youtu.be/KsGGu2jhw7w,2025-05-25
+50,実話風【ジャンガリアンの絵本】ゆらゆらのベニエと風になったトリュフ【感動ストーリー】,https://youtu.be/Db7o6HrbRVI,2025-05-26
+51,【トリュフママの赤ちゃん 】生後12日目、ママ乳腺炎の容態は!?～ジャンガリアンハムスター,https://youtu.be/WWt_jTOpjQ0,2025-05-28
+52,実話風【ジャンガリアンの絵本】ソイラテのおよめさんさがし,https://youtu.be/Zs7x4u2Dy0k,2025-05-31
+53,ハムスターの自然な毛色を撮りたい！ハムスター撮影の裏側,https://youtu.be/JRgzkxrrkWo,2025-06-01
+54,ピントが合わない！？ハムスターがちゃんと撮れるカメラ選び【ハムスター撮影】,https://youtu.be/UDLXdplKXYU,2025-06-04
+55,【トリュフママの赤ちゃん】手乗りデビュー！生後12日目②の"ちびっこ祭り"～ジャンガリアンハムスター,https://youtu.be/gKXE3CY88Zg,2025-06-04
+56,ピントが合わない！？ハムスターがちゃんと撮れるカメラ選び【ハムスター撮影】,https://youtu.be/iXs8qdwi0Pk,2025-06-08
+57,【トリュフママの赤ちゃん】生後13日目、はじめての"部屋んぽ探検隊"！～ジャンガリアンハムスター,https://youtu.be/sEVYYK6pOjg,2025-06-11
+58,【育児8選】ハムスターのママ、育児の個性が全然違う！気になるママ＆育児法はどれ？,https://youtu.be/DDOpRC9BRK8,2025-06-15
+59,【トリュフママの赤ちゃん】可愛すぎる6兄妹が初整列！？生後14日目の奇跡～ジャンガリアンハムスター,https://youtu.be/4H805OTZX_s,2025-06-18
+60,【トリュフママの赤ちゃん】生後14日目② はじめての"手乗り大集合"！わちゃわちゃ大興奮～ジャンガリアンハムスター,https://youtu.be/2qgvkdgC_dQ,2025-06-22
+61,【4兄弟】ついに別居危機？関係性に変化が…悩みが尽きません～ジャンガリアンハムスター,https://youtu.be/M2_3aVFBknQ,2025-06-22
+62,【ブラウニーのお見合い】分家計画リスタート！30分の決戦～希代の○○○誕生,https://youtu.be/GgKHeUQVvfE,2025-06-25
+63,【実食レビュー】ヘルシーなおやつ、チモシークッキー～charm小石川店に行ってきました！,https://youtu.be/QphLN8j8fVs,2025-07-02
+64,その子、本当にジャンガリアン？毛色でわかる？純血とハイブリッドの真実！,https://youtu.be/W-lx7N3qz1I,2025-07-06
+65,【祝1歳】七夕ベイビー、成長の記録 ～ジャンガリアンハムスター,https://youtu.be/2rZCJeVYFRs,2025-07-07
+66,それぞれの体調不良について～ジャンガリアンハムスター,https://youtu.be/-bAoA4CuCVk,2025-07-09
+67,【プレミア公開】結果発表！はむはむ総選挙2025～総勢71匹の頂点に立ったのは誰！？推しハムの運命は…！,https://youtu.be/68INQahmpUs,2025-07-12
+68,【ブラウニーとこったのお見合い】シゴデキ男子と新卒社員～ジャンガリアンハムスター,https://youtu.be/I6K_khVgrw0,2025-07-16
+69,【こった＆リコッタのお見合い】僕には無理ゲーです＆4兄弟に関するお知らせ～ジャンガリアンハムスター,https://youtu.be/ogdMmpLQvIc,2025-07-20
+70,【ジャンガリアンの毛色のヒミツ】赤ちゃんは何色？毛色予想から分かる遺伝子の仕組み～ジャンガリアンハムスター,https://youtu.be/N88T0pNFU8c,2025-07-23
+71,実話風【ジャンガリアンの絵本】まいごのいっぷん～ジャンガリアンハムスター,https://youtu.be/arBMGPgSB4U,2025-07-24
+72,父と同じ病気でーー、母の元へ。2匹のハムスターとお別れしました～ジャンガリアンハムスター,https://youtu.be/ZhEwSqNlTMU,2025-07-27
+73,その命消えるまで、ずっとそばで～眠るように穏やかに～ジャンガリアンハムスター,https://youtu.be/2UujNsw8Rl8,2025-07-30
+74,生後0～1日目【ぱんけーきの赤ちゃん】初の○○誕生！？赤ちゃん産みました！,https://youtu.be/_trqM1_XM6E,2025-08-03
+75,生後0～1日目【リコッタの赤ちゃん】難産、そして育児放棄･･･？～ジャンガリアンハムスター,https://youtu.be/c2Z2fxNrEcE,2025-08-06
+76,生後2～5日目【ぱんけーきの赤ちゃん】ママ、お子さん引きずってますよ～ジャンガリアンハムスター,https://youtu.be/YKdWdMo0Bd8,2025-08-10
+77,生後2～4日目【リコッタママの赤ちゃん】新事実発覚！ママの毛色は○○○～運び屋ママの子育て～ジャンガリアンハムスター,https://youtu.be/qmGBbk9Pr68,2025-08-13
+78,【総勢12匹による大抽選会】おちり豊作！はむはむ総選挙2025プレゼント企画～ジャンがリアンハムスター,https://youtu.be/McLO_sqssAM,2025-08-17
+79,生後6～8日目【ぱんけーきの赤ちゃん】問題児ちゃんvs運搬スキル皆無ママ！零れ出した赤ちゃんに、運搬ママ悪戦苦闘,https://youtu.be/MSVckbnZ-fI,2025-08-20
+80,生後5～7日目【リコッタママの赤ちゃん】赤ちゃん落ちてるー！早くも毛色判明！？～ジャンガリアンハムスター,https://youtu.be/jNpQR0CE-MQ,2025-08-24
+81,【お迎え第1弾】レアカラーの新しい子をお迎えしていました～ジャンガリアンハムスター,https://youtu.be/gvM6DDAHTS8,2025-08-25
+82,【お迎え第2弾】フォレと一緒に、レアカラーのジャンガリアンを新しくお迎えしていました～ジャンガリアンハムスター,https://youtu.be/B0odXoFyZGk,2025-08-26
+83,生後9日目【ぱんけーきの赤ちゃん】赤ちゃん悲鳴祭り～ジャンガリアンハムスター,https://youtu.be/l9BkDXscFGI,2025-08-27
+84,実話風【ジャンガリアンの絵本】また夏がくるたび（史上最高？の仲良し兄弟）～ジャンガリアンハムスター,https://youtu.be/5J6H2C9r5Q8,2025-08-28
+85,【お迎え（第3弾）】美味しそうなジャンガリアンハムスター,https://youtu.be/64uMwDHP8M8,2025-08-31
+86,【プレミア配信】赤ちゃん9匹の命名式～ジャンガリアンハムスター,https://youtu.be/9Resv9EbrNE,2025-09-03
+87,生後8～9日目【リコッタの赤ちゃん】まだ色々心配･･･でも、ママとしてついに覚醒！？～ジャンガリアンハムスター,https://youtu.be/aH6y0uCp8ug,2025-09-07
+88,生後10日目①【ぱんけーきの赤ちゃん】母、発狂～赤ちゃんの脱走が止まらない！,https://youtu.be/X6IltWqUb3c,2025-09-10
+89,生後31＆33日目【巣分け前夜～巣分け】息子を連れていかないで（ぱんけーきママ＆リコッタママ）～ジャンガリアンハムスター,https://youtu.be/zuo-OcmIS70,2025-09-14
+90,生後10～11日目【リコッタママの赤ちゃん】頭突き大好き、やんちゃな赤ちゃん～ジャンガリアンハムスター,https://youtu.be/RuBobm452OU,2025-09-17
+91,生後10日目②【ぱんけーきママ】ママに反旗を翻す赤ちゃん、進軍開始。悪い子ハンターぱんけーきママはどう戦うのか･･･！？～ジャンガリアンハムスター,https://youtu.be/lmS-nFG_U20,2025-09-21
+92,ハッピーバースデー！【ハーフ＆1歳＆1歳半】～ジャンガリアンハムスター,https://youtu.be/B7dz52yUFZI,2025-09-24
+93,【ハムスターの病気】ホワイトモカがぱるふぇパパに命を救われたお話～肺疾患、心疾患,https://youtu.be/j1EAglgHTrw,2025-09-28
+94,生後12日目【リコッタ赤ちゃん】開眼と斜頸発覚！？心配ごとだらけのハムスター～ジャンガリアンハムスター,https://youtu.be/p8TZIXyCULM,2025-10-01
+95,【秋仕様になりました】エステの秋、ダイエットの秋、食欲の秋･･･,https://youtu.be/aSNY1IVvyaI,2025-10-04
+96,生後11日目①【ぱんけーきママ】赤ちゃん大漁に漏れてますよ～ジャンガリアンハムスター,https://youtu.be/rDKicfxlxkA,2025-10-05
+97,生後13日目【リコッタの赤ちゃん】歩いた･･･！ようやく一安心～ジャンガリアンハムスター,https://youtu.be/DWcs0XqOFUY,2025-10-08`;
+
+    const shukureCsvData = `1,①大きく強くなりたいハムスター,フラン,https://youtu.be/K_QorPF9vJo,Sep 1 2023
+2,②リア充になりたいハムスター,すこーん,https://youtu.be/dnMlmwOfEkI,Sep 8 2023
+3,③弟が可愛すぎるお兄ちゃんハムスター,カフェモカ,https://youtu.be/_SSIjewVCfI,Sep 15 2023
+4,④注目されたいハムスター,わっふる,https://youtu.be/Dh882ZjCLy8,Sep 22 2023
+5,⑤お笑い担当を脱却したいハムスター,ブリュレ,https://youtu.be/XPzVxdFMpj4,Sep 29 2023
+6,⑥ハム界の平和を守りたいハムスター,ぷらちな,https://youtu.be/TAeqL3WUWWM,Oct 6 2023
+7,⑦名を受け継ぎたいハムスターと思春期の娘ハムスター,びち太,https://youtu.be/5bsxRq52FKo,Oct 13 2023
+8,⑧眠くて仕方がないハムスター,おはぎ,https://youtu.be/CFZUbF8-rms,Oct 20 2023
+9,⑨はむすび戦隊に入隊したいハムスター,すふれ,https://youtu.be/XJ2SeeP2v00,Oct 27 2023
+10,【10】パパが恥ずかしいハムスター,ソイラテ,https://youtu.be/b-9A_yGoyiA,Nov 3 2023
+11,【11】真の姿が受け入れられないハムスター,ふぉんでゅ,https://youtu.be/pflpWukhSyM,Nov 10 2023
+12,【12】弟が可愛すぎて夜も眠れないハムスター,カフェモカ,https://youtu.be/cA_rCkZIhkQ,Nov 17 2023
+13,【13】区別をつけたいハムスター,アフォガート,https://youtu.be/7JOTkvStSPA,Nov 24 2023
+14,【14】体型が気になるハムスター,かぬれ,https://youtu.be/uWz_CqxCvjY,Dec 1 2023
+15,【15】掃除されたくないハムスター,びち太,https://youtu.be/jjgJFz8rXlQ,Dec 8 2023
+16,【16】改名したいハムスター,でぶた,https://youtu.be/vN9wVLIPYJg,Dec 15 2023
+17,【17】隣ハムがちゃに失敗したハムスター,ロッシェ,https://youtu.be/vGf9jKbNloU,Dec 22 2023
+18,【18】娘たちの将来が心配なハムスター,フィナンシェ,https://youtu.be/E1RGr3F2E8Y,Jan 5 2024
+19,【19】アイプチしたいハムスター,ぴち子,https://youtu.be/LV0EBCLn-7I,Jan 12 2024
+20,【20】キャーキャー言われたいハムスター,とるて,https://youtu.be/6cWuOI_WalU,Jan 19 2024
+21,【21】弟を独り占めしたいハムスター,カフェモカ,https://youtu.be/k3e8dtGRd7E,Jan 26 2024
+22,【22】イケメン高身長と結婚したいハムスター,のえる,https://youtu.be/hX7jjpuobfk,Feb 2 2024
+23,【23】まんまるふわふわボディに誇りを持つハムスター,フィナンシェ,https://youtu.be/yBRGhlMJ4q8,Feb 9 2024
+24,【24】アイドルを目指してるハムスター,ふろまーじゅ,https://youtu.be/UpY4PRJYl4k,Feb 16 2024
+25,【25】若い頃に戻りたいハムスター,さぷれ,https://youtu.be/4TP-dGiVWHk,Feb 23 2024
+26,【26】ハムスターじゃないと言い張るハムスター,えくれあ,https://youtu.be/yQdgkB-HLL8,Mar 1 2024
+27,【27】憧れのあのハムになりたいハムスター,かすてら,https://youtu.be/bJyd2KMWkKM,Mar 8 2024
+28,【28】口がひん曲がってるハムスター,すこーん,https://youtu.be/N9oDmW3D_B8,Mar 15 2024
+29,【29】孫娘にも負けてお手上げ状態のハムスター,すふれ,https://youtu.be/Ganyq_6lFGE,Mar 29 2024
+30,【30】はむすびを主張するハムスター,カフェモカ,https://youtu.be/DpuK3IEsNog,Apr 5 2024
+31,【31】娘の非行を嘆くハムスター,ソイラテ,https://youtu.be/3UO9YvccwLU,Apr 12 2024
+32,【32】痩せすぎて空を飛べそうなハムスター,フィナンシェ,https://youtu.be/7ljg9njAOBQ,Apr 19 2024
+33,【33】色白になりたいハムスター,すもあ,https://youtu.be/6tZyuNTKH5s,Apr 26 2024
+34,【34】変ハム道を究めたいハムスター,ぱるふぇ,https://youtu.be/82m6msDlkzs,May 3 2024
+35,【35】赤ちゃんの作り方を知りたいハムスター,ぴち子,https://youtu.be/9dSxqGrn_Oc,May 10 2024
+36,【36】妹が可愛くなくてムカついてるハムスター,しゅぜっと,https://youtu.be/bZzxh3SCiOY,May 24 2024
+37,【37】強さをアピールするハムスター,らすく,https://youtu.be/MYUXeHA200E,May 31 2024
+38,【38】とある議題について話し合いたいハムスター,カフェモカ,https://youtu.be/GXSlZLcjBqs,Jun 14 2024
+39,【39】増えるフタパカ族に困っちゃうハムスター,しゅぜっと,https://youtu.be/zxEVq2ocbOg,Jun 21 2024
+40,【40】激太りに戸惑うハムスター,コレット,https://youtu.be/kZC6F-5oAIk,Jul 5 2024
+41,【41】ママの目を覚ましたいハムスター,まどれーぬ,https://youtu.be/Eu_JW5LJyoY,Jul 12 2024
+42,【42】初めての育児に悩むハムスター,コレット,https://youtu.be/El1TJgb9r5I,Jul 19 2024
+43,【43】転生した件について話したいハムスター,カフェモカ,https://youtu.be/T7LyJiIRFzc,Jul 26 2024
+44,【44】おちりが魅力的なハムスター,すこーん,https://youtu.be/2vuk3-1DxgU,Aug 2 2024
+45,【45】ぷるぷるしちゃう子誰ですか？なハムスター,かぬれ,https://youtu.be/6f937THIEKw,Aug 9 2024
+46,【46】変ハム増殖を嘆くハムスター,ぷらちな,https://youtu.be/bd1l_6tn644,Aug 16 2024
+47,【47】妹を労いたいハムスター,ソイラテ,https://youtu.be/UaE48WAGPCI,Aug 30 2024
+48,【48】整形したいハムスター,ぱるふぇ,https://youtu.be/COmPpdm5TjA,Sep 6 2024
+49,【49】狭間世代に悩むハムスター,すもあ,https://youtu.be/Ig9XN7u41sI,Sep 27 2024
+50,【50】ママの抱き心地が忘れられないハムスター,コレット,https://youtu.be/9IBTXudz-5s,Oct 4 2024
+51,【51】お腹が空いてたまらないハムスター,カフェオレ,https://youtu.be/A8molwrwzb8,Oct 11 2024
+52,【52】ママのことが心配なハムスター,まどれーふ,https://youtu.be/9sC-H7QMo1o,Nov 1 2024
+53,【53】愉快な仲間たちに入れなかったハムスター,くれーぷ,https://youtu.be/AVum256rWtM,Nov 8 2024
+54,【54】妹とパパの不仲に心を痛めるハムスター,ソイラテ,https://youtu.be/_3cgoEFYgpM,Nov 22 2024
+55,【55】ママと比べて落ち込むハムスター,コンパナ,https://youtu.be/uoGiTBeXJMo,Nov 29 2024
+56,【56】自称カリスマ美容師のハムスター,ロッシェ,https://youtu.be/N8_M8AAc4LE,Dec 6 2024
+57,【56】速さを主張するハムスター,らすく,https://youtu.be/R-LQeEaB_uw,Dec 27 2024
+58,【57】正月太りしちゃったハムスター,ぷらりね,https://youtu.be/p9VFBANsuP8,Jan 3 2025
+59,【58】けしからん福袋を買い占めたいハムスター,カフェモカ,https://youtu.be/ON57hu_wQNo,Jan 10 2025
+60,【59】最近の子がおでぶ過ぎる件を嘆くハムスター,しふぉん,https://youtu.be/F-zF6tCpsZk,Jan 17 2025
+61,【60】福袋を探して三千里のハムスター,フラン,https://youtu.be/jipzDdvKH3k,Jan 24 2025
+62,【61】バインバインになりたいハムスター,トリュフ,https://youtu.be/-vh4Qyg1sSc,Jan 31 2025
+63,【62】生まれ変わっても弟が可愛すぎるハムスター,カフェモカ,https://youtu.be/j-qxVdzPtr8,Feb 21 2025
+64,【63】勝ち残るために変身したいハムスター,ぱるふぇ,https://youtu.be/mdEAqMoqfLU,Mar 7 2025
+65,【64】しゅくれ先生はどこですか？なハムスター,カフェモカ,https://youtu.be/rlXcAVZkRJY,Apr 1 2025
+66,【65】おちおち休んでられないハムスター,しゅくれ,https://youtu.be/ngObUo6zC3o,Apr 3 2025
+67,【66】名前を継がせたいハムスター,びち太,https://youtu.be/Bl-q02a8Y94,Apr 4 2025
+68,【67】ぱいぱいネームなハムスター,ぱいこ,https://youtu.be/gmqoNcG2Cbg,Apr 18 2025
+69,【68】風評被害に合ったハムスター,アマレッティ,https://youtu.be/gX3N5M8Am9Y,May 16 2025
+70,【69】いたずら描きしたいハムスター,すふれ,https://youtu.be/8g5NqBy6oaw,May 23 2025
+71,【70】夜な夜な悩めるハムスター,フレジェ,https://youtu.be/QZvq28QazLU,Jun 6 2025
+72,【71】アイデンティティクライシスなハムスター,ぱるふぇ,https://youtu.be/lZKmA-B72CE,Jun 13 2025
+73,【72】ぼぼぼ僕はつつつ強いんだぞなハムスター,らすく,https://youtu.be/l2onhBHk6GY,Jun 20 2025
+74,【73】おちりがつかめないハムスター,こった,https://youtu.be/g339lpoXnlk,Jul 11 2025
+75,【74】ねむねむ族に対抗するハムスター,カフェモカ,https://youtu.be/HAs3X2r1E70,Jul 18 2025
+76,【75】たまたまが手持ち無沙汰なハムスター,ブラウニー,https://youtu.be/0T1HjNuXOrE,Jul 25 2025
+77,【76】本日ババアになったハムスター,コレット,https://youtu.be/w7fdqjQXyPk,Aug 1 2025
+78,【77】美意識高い系お年頃のハムスター,ことん,https://youtu.be/81XFcUSCJxE,Aug 8 2025
+79,【78】お盆だから弟に会いに来たハムスター,カフェモカ,https://youtu.be/zOGi_JtOLmI,Aug 15 2025
+80,【79】押し寄せるおやじーずハムスター,おやじーず,https://youtu.be/hfxsnDLpUh8,Aug 22 2025
+81,【80】跳びたいハムスター,ぱんな,https://youtu.be/Ah4yvWy4fsg,Aug 29 2025
+82,【81】パパが嫌いになりそうなハムスター,ブラお,https://youtu.be/whgk61MyT7A,Sep 5 2025
+83,【82】算数が苦手になりそうなハムスター,ぴちる,https://youtu.be/W5kAV1AdPlQ,Sep 12 2025
+84,【83】パパと妹の関係が心配なハムスター,ソイラテ,https://youtu.be/Vrp5KwaxklU,Sep 19 2025
+85,【84】療養してたハムスター,しゅくれ,https://youtu.be/CuQK-XqvjnI,Sep 26 2025
+86,【85】でかく強くなりたいハムスター,コンパナ,https://youtu.be/gPg0CIqqRLo,Oct 3 2025
+87,【86】ママを消臭してほしいハムスター,ぴちる,https://youtu.be/gPg0CIqqRLo,Oct 17 2025`;
+
+    // --- CSV Parse ---
+    function parseCSV(csv, hasGuest = false) {
+      const lines = csv.replace(/\r\n?/g, '\n').split('\n').filter(Boolean);
+      const arr = [];
+      for (const line of lines) {
+        const parts = line.split(',');
+        if (hasGuest && parts.length >= 4) {
+          const no = parts[0].trim();
+          const title = parts[1].trim();
+          const guest = parts[2].trim();
+          const url = parts[3].trim();
+          const date = parts[4] ? parts[4].trim() : '';
+          arr.push({ no, title, guest, url, date });
+        } else if (!hasGuest && parts.length >= 3) {
+          const no = parts[0].trim();
+          const title = parts[1].trim();
+          const url = parts[2].trim();
+          const date = parts[3] ? parts[3].trim() : '';
+          arr.push({ no, title, url, date });
+        }
+      }
+      return arr;
+    }
+
+    // --- State ---
+    const regularVideos = parseCSV(regularCsvData);
+    const shukureVideos = parseCSV(shukureCsvData, true);
+    let regularVotes = [];
+    let shukureVotes = [];
+    let isRegularOpen = false;
+    let isShukureOpen = false;
+
+    // --- Elements ---
+    const elRegularList = document.getElementById('regularVideoList');
+    const elShukureList = document.getElementById('shukureVideoList');
+    const elRegularCount = document.getElementById('regularCount');
+    const elShukureCount = document.getElementById('shukureCount');
+    const elRegularListText = document.getElementById('regularList');
+    const elShukureListText = document.getElementById('shukureList');
+    const elBtnSubmit = document.getElementById('btnSubmit');
+    const elPanelRegular = document.getElementById('panelRegular');
+    const elPanelShukure = document.getElementById('panelShukure');
+    const elChevRegular = document.getElementById('chevRegular');
+    const elChevShukure = document.getElementById('chevShukure');
+    const elBtnShare = document.getElementById('btnShare');
+    const elBtnCopy = document.getElementById('btnCopy');
+    const elCopyIcon = document.getElementById('copyIcon');
+    const elCheckIcon = document.getElementById('checkIcon');
+    const elCopyText = document.getElementById('copyText');
+    
+    // YouTube確認モーダル用
+    const youtubeModal = document.getElementById('youtubeModal');
+    const btnCancelYoutube = document.getElementById('btnCancelYoutube');
+    const btnOkYoutube = document.getElementById('btnOkYoutube');
+    let pendingYoutubeUrl = null;
+
+    // --- Render Lists ---
+    function renderRegularList() {
+      elRegularList.innerHTML = '';
+      for (const v of regularVideos) {
+        const row = document.createElement('div');
+        row.className = 'flex items-start gap-3 p-3 hover:bg-orange-50 rounded-lg transition border border-gray-100';
+
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.className = 'mt-1 w-5 h-5 text-orange-500 rounded focus:ring-orange-400 cursor-pointer flex-shrink-0';
+        cb.checked = regularVotes.includes(v.no);
+        cb.disabled = !regularVotes.includes(v.no) && regularVotes.length >= 3;
+        cb.addEventListener('change', () => {
+          const idx = regularVotes.indexOf(v.no);
+          if (idx >= 0) regularVotes.splice(idx, 1);
+          else if (regularVotes.length < 3) regularVotes.push(v.no);
+          updateRegular();
+          renderRegularList();
+        });
+        row.appendChild(cb);
+
+        const info = document.createElement('div');
+        info.className = 'flex-1 min-w-0';
+
+        const top = document.createElement('div');
+        top.className = 'flex items-start gap-2 mb-1';
+
+        const badge = document.createElement('span');
+        badge.className = 'bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0';
+        badge.textContent = 'No.' + v.no;
+        top.appendChild(badge);
+
+        const link = document.createElement('a');
+        link.href = v.url;
+        link.className = 'text-xs md:text-sm font-medium text-gray-800 hover:text-orange-600 transition break-words';
+        link.textContent = v.title;
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          pendingYoutubeUrl = v.url;
+          youtubeModal.style.display = 'flex';
+        });
+        top.appendChild(link);
+
+        info.appendChild(top);
+
+        const date = document.createElement('p');
+        date.className = 'text-xs text-gray-500';
+        date.textContent = '公開日: ' + v.date;
+        info.appendChild(date);
+
+        row.appendChild(info);
+        elRegularList.appendChild(row);
+      }
+    }
+
+    function renderShukureList() {
+      elShukureList.innerHTML = '';
+      for (const v of shukureVideos) {
+        const row = document.createElement('div');
+        row.className = 'flex items-start gap-3 p-3 hover:bg-pink-50 rounded-lg transition border border-gray-100';
+
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.className = 'mt-1 w-5 h-5 text-pink-500 rounded focus:ring-pink-400 cursor-pointer flex-shrink-0';
+        cb.checked = shukureVotes.includes(v.no);
+        cb.disabled = !shukureVotes.includes(v.no) && shukureVotes.length >= 3;
+        cb.addEventListener('change', () => {
+          const idx = shukureVotes.indexOf(v.no);
+          if (idx >= 0) shukureVotes.splice(idx, 1);
+          else if (shukureVotes.length < 3) shukureVotes.push(v.no);
+          updateShukure();
+          renderShukureList();
+        });
+        row.appendChild(cb);
+
+        const info = document.createElement('div');
+        info.className = 'flex-1 min-w-0';
+
+        const top = document.createElement('div');
+        top.className = 'flex items-start gap-2 mb-1';
+
+        const badge = document.createElement('span');
+        badge.className = 'bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0';
+        badge.textContent = 'No.' + v.no;
+        top.appendChild(badge);
+
+        const link = document.createElement('a');
+        link.href = v.url;
+        link.className = 'text-xs md:text-sm font-medium text-gray-800 hover:text-pink-600 transition break-words';
+        link.textContent = v.title;
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          pendingYoutubeUrl = v.url;
+          youtubeModal.style.display = 'flex';
+        });
+        top.appendChild(link);
+
+        info.appendChild(top);
+
+        const details = document.createElement('div');
+        details.className = 'text-xs text-gray-500 flex items-center gap-2 flex-wrap';
+        
+        const guestSpan = document.createElement('span');
+        guestSpan.textContent = '来訪ハム: ' + v.guest;
+        details.appendChild(guestSpan);
+        
+        const dot = document.createElement('span');
+        dot.textContent = '•';
+        details.appendChild(dot);
+        
+        const dateSpan = document.createElement('span');
+        dateSpan.textContent = '公開日: ' + v.date;
+        details.appendChild(dateSpan);
+        
+        info.appendChild(details);
+
+        row.appendChild(info);
+        elShukureList.appendChild(row);
+      }
+    }
+
+    // --- Update UI ---
+    function updateRegular() {
+      const sorted = [...regularVotes].sort((a, b) => parseInt(a) - parseInt(b));
+      elRegularCount.textContent = sorted.length + '/3票';
+      if (sorted.length) {
+        elRegularListText.classList.remove('hidden');
+        elRegularListText.textContent = '投票番号: ' + sorted.join(', ');
+      } else {
+        elRegularListText.classList.add('hidden');
+        elRegularListText.textContent = '';
+      }
+    }
+
+    function updateShukure() {
+      const sorted = [...shukureVotes].sort((a, b) => parseInt(a) - parseInt(b));
+      elShukureCount.textContent = sorted.length + '/3票';
+      if (sorted.length) {
+        elShukureListText.classList.remove('hidden');
+        elShukureListText.textContent = '投票番号: ' + sorted.join(', ');
+      } else {
+        elShukureListText.classList.add('hidden');
+        elShukureListText.textContent = '';
+      }
+    }
+
+    // --- Toggle Panels ---
+    function toggleRegular() {
+      isRegularOpen = !isRegularOpen;
+      const btnText = document.querySelector('#btnToggleRegular span:first-child');
+      if (isRegularOpen) {
+        elPanelRegular.classList.remove('hidden');
+        elChevRegular.textContent = '▲';
+        btnText.textContent = '通常動画一覧を閉じる';
+      } else {
+        elPanelRegular.classList.add('hidden');
+        elChevRegular.textContent = '▼';
+        btnText.textContent = '通常動画一覧を開く';
+      }
+    }
+
+    function toggleShukure() {
+      isShukureOpen = !isShukureOpen;
+      const btnText = document.querySelector('#btnToggleShukure span:first-child');
+      if (isShukureOpen) {
+        elPanelShukure.classList.remove('hidden');
+        elChevShukure.textContent = '▲';
+        btnText.textContent = 'しゅくれの部屋一覧を閉じる';
+      } else {
+        elPanelShukure.classList.add('hidden');
+        elChevShukure.textContent = '▼';
+        btnText.textContent = 'しゅくれの部屋一覧を開く';
+      }
+    }
+
+    // --- Share & Copy ---
+    async function handleShare() {
+      const regularText = regularVotes.sort((a, b) => parseInt(a) - parseInt(b)).join(', ') || 'なし';
+      const shukureText = shukureVotes.sort((a, b) => parseInt(a) - parseInt(b)).join(', ') || 'なし';
+      const shareData = {
+        title: 'はむチラ長屋 2026MVP投票',
+        text: `通常動画: ${regularText}\nしゅくれの部屋: ${shukureText}`,
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (err) {
+          console.log('Share failed:', err);
+        }
+      } else {
+        handleCopy();
+      }
+    }
+
+    function handleCopy() {
+      const regularText = regularVotes.sort((a, b) => parseInt(a) - parseInt(b)).join(', ') || 'なし';
+      const shukureText = shukureVotes.sort((a, b) => parseInt(a) - parseInt(b)).join(', ') || 'なし';
+      const text = `はむチラ長屋 2026MVP投票\n通常動画: ${regularText}\nしゅくれの部屋: ${shukureText}`;
+      
+      navigator.clipboard.writeText(text);
+      elCopyIcon.classList.add('hidden');
+      elCheckIcon.classList.remove('hidden');
+      elCopyText.textContent = 'コピー完了!';
+      
+      setTimeout(() => {
+        elCopyIcon.classList.remove('hidden');
+        elCheckIcon.classList.add('hidden');
+        elCopyText.textContent = 'コピー';
+      }, 2000);
+    }
+
+    // --- Submit ---
+    async function submitVotes() {
+      if (!regularVotes.length && !shukureVotes.length) {
+        alert('少なくとも1票は投票してください');
+        return;
+      }
+
+      const payload = {
+        regularVotes: [...regularVotes].sort((a, b) => parseInt(a) - parseInt(b)).join(', '),
+        shukureVotes: [...shukureVotes].sort((a, b) => parseInt(a) - parseInt(b)).join(', ')
+      };
+
+      const oldText = elBtnSubmit.textContent;
+      elBtnSubmit.textContent = '送信中...';
+      elBtnSubmit.disabled = true;
+
+      try {
+        const res = await fetch('https://script.google.com/macros/s/AKfycbzFHT8DBwlJBYpopEvYe-ZXTveimFvrRU1plODlHdCPmdRx-d7VZu41--DxKPgZnSeM6A/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        const txt = await res.text();
+        document.getElementById('debug').textContent = 'サーバー応答: ' + txt;
+        
+        elBtnSubmit.textContent = '✓ 投票完了!';
+        alert('✅ 投票を受け付けました！\n\n通常動画: ' + (payload.regularVotes || 'なし') + '\nしゅくれの部屋: ' + (payload.shukureVotes || 'なし'));
+        
+        setTimeout(() => {
+          regularVotes = [];
+          shukureVotes = [];
+          updateRegular();
+          updateShukure();
+          renderRegularList();
+          renderShukureList();
+          elBtnSubmit.textContent = '投票する';
+        }, 800);
+      } catch (e) {
+        document.getElementById('debug').textContent = '送信エラー: ' + String(e);
+        alert('❌ 送信に失敗しました。もう一度お試しください。');
+        elBtnSubmit.textContent = oldText;
+        elBtnSubmit.disabled = false;
+      }
+    }
+
+    // --- Event Listeners ---
+    document.getElementById('btnToggleRegular').addEventListener('click', toggleRegular);
+    document.getElementById('btnToggleShukure').addEventListener('click', toggleShukure);
+    elBtnShare.addEventListener('click', handleShare);
+    elBtnCopy.addEventListener('click', handleCopy);
+    elBtnSubmit.addEventListener('click', submitVotes);
+    
+    // YouTube確認モーダル
+    btnCancelYoutube.addEventListener('click', () => {
+      pendingYoutubeUrl = null;
+      youtubeModal.style.display = 'none';
+    });
+    
+    btnOkYoutube.addEventListener('click', () => {
+      const url = pendingYoutubeUrl;
+      pendingYoutubeUrl = null;
+      youtubeModal.style.display = 'none';
+      if (url) window.open(url, '_blank', 'noopener,noreferrer');
+    });
+    
+    // モーダル背景クリックで閉じる
+    youtubeModal.addEventListener('click', (e) => {
+      if (e.target === youtubeModal) {
+        pendingYoutubeUrl = null;
+        youtubeModal.style.display = 'none';
+      }
+    });
+
+    // --- Initialize ---
+    renderRegularList();
+    renderShukureList();
+    updateRegular();
+    updateShukure();
+  </script>
+</body>
+</html>
