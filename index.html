@@ -100,6 +100,36 @@
           <div class="text-xs text-gray-400 mt-2">※ 一覧内をスクロールできます</div>
         </div>
       </div>
+
+      <!-- 抽選セクション -->
+      <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 mb-4 border-2 border-yellow-200">
+        <div class="text-center mb-4">
+          <div class="text-2xl mb-2">🎁 抽選くじ付き！</div>
+          <p class="text-sm text-gray-700 font-medium">投票者の中から抽選でプレゼント</p>
+        </div>
+        
+        <div class="mb-4">
+          <label for="handleName" class="block text-sm font-medium text-gray-700 mb-2">ハンドルネーム</label>
+          <input type="text" id="handleName" 
+                 class="w-full p-3 border-2 border-yellow-300 rounded-lg focus:border-yellow-500 focus:outline-none"
+                 placeholder="例: はむ太郎">
+        </div>
+        
+        <div class="space-y-1 text-xs text-gray-600">
+          <div class="flex items-start gap-2">
+            <span>💡</span>
+            <span>入力すると抽選番号が手に入ります</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span>📸</span>
+            <span>投票後の番号はスクショ推奨</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span>🎬</span>
+            <span>後日YouTube動画で当選発表</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- フッター -->
@@ -387,6 +417,7 @@
     const elCopyIcon = document.getElementById('copyIcon');
     const elCheckIcon = document.getElementById('checkIcon');
     const elCopyText = document.getElementById('copyText');
+    const elHandleName = document.getElementById('handleName');
     
     // YouTube確認モーダル用
     const youtubeModal = document.getElementById('youtubeModal');
@@ -638,9 +669,12 @@
         return;
       }
 
+      const handleName = elHandleName.value.trim();
+      
       const payload = {
         regularVotes: [...regularVotes].sort((a, b) => parseInt(a) - parseInt(b)).join(', '),
-        shukureVotes: [...shukureVotes].sort((a, b) => parseInt(a) - parseInt(b)).join(', ')
+        shukureVotes: [...shukureVotes].sort((a, b) => parseInt(a) - parseInt(b)).join(', '),
+        handleName: handleName
       };
 
       const oldText = elBtnSubmit.textContent;
@@ -666,11 +700,18 @@
         
         if (result.result === 'success' || text.includes('success')) {
           elBtnSubmit.textContent = '✓ 投票完了!';
-          alert('投票ありがとうございました！\n引き続き、はむチラをよろしくお願いします！');
+          
+          // ハンドルネームがある場合は抽選番号を表示
+          if (handleName && result.lotteryNumber) {
+            alert(`🎉 投票ありがとうございました！\n\nあなたの抽選番号\n🎫 ${result.lotteryNumber}\n\n📝 この番号を必ず控えてください！\nスクリーンショット推奨\n\n後日、YouTube動画で当選番号を発表します。\n当選した方はご連絡ください！\n\n引き続き、はむチラをよろしくお願いします！`);
+          } else {
+            alert('投票ありがとうございました！\n引き続き、はむチラをよろしくお願いします！');
+          }
           
           setTimeout(() => {
             regularVotes = [];
             shukureVotes = [];
+            elHandleName.value = '';
             updateRegular();
             updateShukure();
             renderRegularList();
