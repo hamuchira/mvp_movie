@@ -629,24 +629,38 @@
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
-        const txt = await res.text();
-        document.getElementById('debug').textContent = 'サーバー応答: ' + txt;
         
-        elBtnSubmit.textContent = '✓ 投票完了!';
-        alert('✅ 投票を受け付けました！\n\n通常動画: ' + (payload.regularVotes || 'なし') + '\nしゅくれの部屋: ' + (payload.shukureVotes || 'なし'));
+        const text = await res.text();
+        document.getElementById('debug').textContent = 'サーバー応答: ' + text;
         
-        setTimeout(() => {
-          regularVotes = [];
-          shukureVotes = [];
-          updateRegular();
-          updateShukure();
-          renderRegularList();
-          renderShukureList();
-          elBtnSubmit.textContent = '投票する';
-        }, 800);
+        // JSONレスポンスをパース（エラーの場合はテキストのまま）
+        let result;
+        try {
+          result = JSON.parse(text);
+        } catch {
+          result = { result: text.includes('success') ? 'success' : 'error', message: text };
+        }
+        
+        if (result.result === 'success' || text.includes('success')) {
+          elBtnSubmit.textContent = '✓ 投票完了!';
+          alert('✅ 投票を受け付けました！\n\n通常動画: ' + (payload.regularVotes || 'なし') + '\nしゅくれの部屋: ' + (payload.shukureVotes || 'なし'));
+          
+          setTimeout(() => {
+            regularVotes = [];
+            shukureVotes = [];
+            updateRegular();
+            updateShukure();
+            renderRegularList();
+            renderShukureList();
+            elBtnSubmit.textContent = '投票する';
+            elBtnSubmit.disabled = false;
+          }, 800);
+        } else {
+          throw new Error(result.message || '投票に失敗しました');
+        }
       } catch (e) {
         document.getElementById('debug').textContent = '送信エラー: ' + String(e);
-        alert('❌ 送信に失敗しました。もう一度お試しください。');
+        alert('❌ 送信に失敗しました。\n\nエラー: ' + String(e) + '\n\nもう一度お試しください。');
         elBtnSubmit.textContent = oldText;
         elBtnSubmit.disabled = false;
       }
