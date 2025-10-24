@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>🏆 2026年動画MVP投票｜もっと!はむチラ長屋ch.</title>
   <meta name="description" content="はむチラ長屋ch. 2026年MVP投票。通常動画3票＋しゅくれの部屋3票まで。" />
+  <link rel="icon" type="image/png" href="favicon.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
@@ -16,13 +17,13 @@
 </head>
 <body class="min-h-screen bg-gradient-to-b from-orange-50 to-pink-50">
   <!-- ヘッダー画像エリア -->
-  <div class="header-placeholder w-full h-48 md:h-64 flex items-center justify-center">
-    <div class="text-center text-white px-4">
+  <div class="w-full h-48 md:h-64 flex items-center justify-center overflow-hidden" style="background: linear-gradient(135deg, #f97316 0%, #ec4899 100%);">
+    <img src="header-image.jpg" alt="2026 MVP投票" class="w-full h-full object-cover" 
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="text-center text-white px-4" style="display: none; position: absolute;">
       <div class="text-sm mb-2">📷 ヘッダー画像をここに配置</div>
       <div class="text-xs opacity-75">推奨サイズ: 1200x400px</div>
       <div class="text-xs opacity-75">ファイル名: header-image.jpg</div>
-      <!-- 実際の画像を使う場合は下記のようにしてください -->
-      <!-- <img src="header-image.jpg" alt="2026 MVP投票" class="w-full h-full object-cover"> -->
     </div>
   </div>
 
@@ -38,7 +39,7 @@
         <div class="grid md:grid-cols-2 gap-4">
           <div class="bg-yellow-50 rounded-xl p-4 text-left">
             <h3 class="font-bold text-yellow-600 mb-2">📅 投票期間</h3>
-            <p class="text-sm text-gray-700">2025年10月24日～12月31日</p>
+            <p class="text-sm text-gray-700">2025年10月25日(土)～11月9日(日)</p>
           </div>
           <div class="bg-pink-50 rounded-xl p-4 text-left">
             <h3 class="font-bold text-pink-600 mb-2">🎊 結果発表</h3>
@@ -128,10 +129,10 @@
     <div class="max-w-4xl mx-auto px-4 py-4">
       <!-- シェア＆コピーボタン -->
       <div class="flex gap-3 mb-3">
-        <button id="btnShare" type="button"
-                class="flex-1 bg-blue-500 text-white py-3 rounded-lg font-medium hover:bg-blue-600 transition flex items-center justify-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          <span>投票内容をシェア</span>
+        <button id="btnShareX" type="button"
+                class="flex-1 bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition flex items-center justify-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span>Xでシェア</span>
         </button>
         <button id="btnCopy" type="button"
                 class="flex-1 bg-gray-500 text-white py-3 rounded-lg font-medium hover:bg-gray-600 transition flex items-center justify-center gap-2">
@@ -146,7 +147,6 @@
               class="w-full bg-gradient-to-r from-orange-500 to-pink-500 text-white py-4 rounded-xl font-bold text-lg hover:from-orange-600 hover:to-pink-600 transition shadow-lg">
         投票する
       </button>
-      <div id="debug" class="text-xs text-gray-500 mt-2 text-center"></div>
     </div>
   </div>
 
@@ -382,7 +382,7 @@
     const elPanelShukure = document.getElementById('panelShukure');
     const elChevRegular = document.getElementById('chevRegular');
     const elChevShukure = document.getElementById('chevShukure');
-    const elBtnShare = document.getElementById('btnShare');
+    const elBtnShareX = document.getElementById('btnShareX');
     const elBtnCopy = document.getElementById('btnCopy');
     const elCopyIcon = document.getElementById('copyIcon');
     const elCheckIcon = document.getElementById('checkIcon');
@@ -570,32 +570,56 @@
     }
 
     // --- Share & Copy ---
-    async function handleShare() {
+    function handleShareX() {
       const regularText = regularVotes.sort((a, b) => parseInt(a) - parseInt(b)).join(', ') || 'なし';
       const shukureText = shukureVotes.sort((a, b) => parseInt(a) - parseInt(b)).join(', ') || 'なし';
-      const shareData = {
-        title: 'はむチラ長屋 2026MVP投票',
-        text: `通常動画: ${regularText}\nしゅくれの部屋: ${shukureText}`,
-        url: window.location.href
-      };
-
-      if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-        } catch (err) {
-          console.log('Share failed:', err);
+      
+      let shareText = '#はむチラMVP に投票したよ！\n\n';
+      
+      // 投票内容を表示
+      if (regularVotes.length > 0 || shukureVotes.length > 0) {
+        shareText += '【投票内容】\n';
+        if (regularVotes.length > 0) {
+          shareText += `📺通常動画: ${regularText}\n`;
         }
-      } else {
-        handleCopy();
+        if (shukureVotes.length > 0) {
+          shareText += `🎀しゅくれの部屋: ${shukureText}\n`;
+        }
+        shareText += '\n';
       }
+      
+      shareText += 'みんなも投票してみてね！\n';
+      shareText += window.location.href + '\n\n';
+      shareText += '#はむチラ #ハムスター';
+      
+      // X（Twitter）のシェアURLを開く
+      const twitterUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
+      window.open(twitterUrl, '_blank', 'width=550,height=420');
     }
 
     function handleCopy() {
       const regularText = regularVotes.sort((a, b) => parseInt(a) - parseInt(b)).join(', ') || 'なし';
       const shukureText = shukureVotes.sort((a, b) => parseInt(a) - parseInt(b)).join(', ') || 'なし';
-      const text = `はむチラ長屋 2026MVP投票\n通常動画: ${regularText}\nしゅくれの部屋: ${shukureText}`;
       
-      navigator.clipboard.writeText(text);
+      let copyText = '#はむチラMVP に投票したよ！\n\n';
+      
+      // 投票内容を表示
+      if (regularVotes.length > 0 || shukureVotes.length > 0) {
+        copyText += '【投票内容】\n';
+        if (regularVotes.length > 0) {
+          copyText += `📺通常動画: ${regularText}\n`;
+        }
+        if (shukureVotes.length > 0) {
+          copyText += `🎀しゅくれの部屋: ${shukureText}\n`;
+        }
+        copyText += '\n';
+      }
+      
+      copyText += 'みんなも投票してみてね！\n';
+      copyText += window.location.href + '\n\n';
+      copyText += '#はむチラ #ハムスター';
+      
+      navigator.clipboard.writeText(copyText);
       elCopyIcon.classList.add('hidden');
       elCheckIcon.classList.remove('hidden');
       elCopyText.textContent = 'コピー完了!';
@@ -631,7 +655,6 @@
         });
         
         const text = await res.text();
-        document.getElementById('debug').textContent = 'サーバー応答: ' + text;
         
         // JSONレスポンスをパース（エラーの場合はテキストのまま）
         let result;
@@ -643,7 +666,7 @@
         
         if (result.result === 'success' || text.includes('success')) {
           elBtnSubmit.textContent = '✓ 投票完了!';
-          alert('✅ 投票を受け付けました！\n\n通常動画: ' + (payload.regularVotes || 'なし') + '\nしゅくれの部屋: ' + (payload.shukureVotes || 'なし'));
+          alert('投票ありがとうございました！\n引き続き、はむチラをよろしくお願いします！');
           
           setTimeout(() => {
             regularVotes = [];
@@ -659,8 +682,7 @@
           throw new Error(result.message || '投票に失敗しました');
         }
       } catch (e) {
-        document.getElementById('debug').textContent = '送信エラー: ' + String(e);
-        alert('❌ 送信に失敗しました。\n\nエラー: ' + String(e) + '\n\nもう一度お試しください。');
+        alert('❌ 送信に失敗しました。もう一度お試しください。');
         elBtnSubmit.textContent = oldText;
         elBtnSubmit.disabled = false;
       }
@@ -669,7 +691,7 @@
     // --- Event Listeners ---
     document.getElementById('btnToggleRegular').addEventListener('click', toggleRegular);
     document.getElementById('btnToggleShukure').addEventListener('click', toggleShukure);
-    elBtnShare.addEventListener('click', handleShare);
+    elBtnShareX.addEventListener('click', handleShareX);
     elBtnCopy.addEventListener('click', handleCopy);
     elBtnSubmit.addEventListener('click', submitVotes);
     
